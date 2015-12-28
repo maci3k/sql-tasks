@@ -1,5 +1,27 @@
+CREATE SEQUENCE posts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE SEQUENCE threads_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
 CREATE TABLE posts (
-  id          BIGINT                                 NOT NULL,
+  id          BIGINT                                 DEFAULT nextval('posts_id_seq'::regclass) NOT NULL,
   body        TEXT,
   author_id   BIGINT                                 NOT NULL,
   thread_id   BIGINT                                 NOT NULL,
@@ -8,7 +30,7 @@ CREATE TABLE posts (
 
 
 CREATE TABLE threads (
-  id          BIGINT                                 NOT NULL,
+  id          BIGINT                                 DEFAULT nextval('threads_id_seq'::regclass) NOT NULL,
   title       CHARACTER VARYING(256)                 NOT NULL,
   body        TEXT,
   author_id   BIGINT                                 NOT NULL,
@@ -17,8 +39,8 @@ CREATE TABLE threads (
 
 
 CREATE TABLE users (
-  id    BIGINT                 NOT NULL,
-  email CHARACTER VARYING(256) NOT NULL
+  id          BIGINT                                 DEFAULT nextval('users_id_seq'::regclass) NOT NULL,
+  email       CHARACTER VARYING(256)                 NOT NULL
 );
 
 

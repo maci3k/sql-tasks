@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "bluebird": "3.0.6",
+    "bluebird": "2.9.34",
     "pg": "4.4.3"
   },
   "devDependencies": {

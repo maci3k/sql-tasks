@@ -3,8 +3,10 @@
 var Promise = require('bluebird');
 var pg = require('pg');
 var fs = require('fs');
+var expect = require('chai').expect;
 
 pg.defaults.poolSize = 2;
+var pgConnect = Promise.promisify(pg.connect, pg);
 
 var config = {
     db: {
@@ -14,7 +16,6 @@ var config = {
 
 function getClient()
 {
-    var pgConnect = Promise.promisify(pg.connect, pg);
     return pgConnect(config.db.connectionUrl).spread(function (client, done)
     {
         return {query: Promise.promisify(client.query, client), done: done};
@@ -34,13 +35,13 @@ describe('Schema', function ()
     {
         return getClient().then(function (client)
         {
-            return client.query('drop schema public').then(function ()
+            return client.query('DROP SCHEMA IF EXISTS public CASCADE').then(function ()
             {
-                return client.query('create schema public');
+                return client.query('CREATE SCHEMA public');
             }).then(function ()
             {
-                client.query(createSchemaCommand);
-            });
+                return client.query(createSchemaCommand.toString());
+            }).then(client.done);
         });
     });
 
@@ -48,11 +49,38 @@ describe('Schema', function ()
     {
         describe('when new row is inserted without id', function ()
         {
-            it('should automatically generate id from users_id_sequence');
+            it('should automatically generate id from users_id_sequence', function ()
+            {
+                return getClient().then(function (client)
+                {
+                    return client.query('INSERT INTO users(email) VALUES (\'example@email.com\'),(\'another@email.com\')').then(function ()
+                    {
+                        return client.query('SELECT * FROM users');
+                    }).then(function (result)
+                    {
+                        var expectedResultRows = [{id: '1', email: 'example@email.com'}, {id: '2', email: 'another@email.com'}];
+                        expect(result.rows).to.eql(expectedResultRows);
+                    }).then(client.done)
+                });
+            });
         });
+
         describe('when new row is inserted without email', function ()
         {
-            it('should reject the operation');
+            it('should reject the operation', function ()
+            {
+                return getClient().then(function (client)
+                {
+                    return client.query('INSERT INTO users(id) VALUES (100)').then(function (res)
+                    {
+                        throw new Error('expected opration fail');
+                    }).catch(function (err)
+                    {
+                        expect(err.routine).to.equal('ExecConstraints');
+                        expect(err.code).to.equal('23502');
+                    }).then(client.done)
+                });
+            });
         });
         describe('when new row is inserted with already existing email', function ()
         {
