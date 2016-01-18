@@ -1,12 +1,13 @@
 {
   "name": "sql-create-schema",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "bluebird": "2.9.34",
     "pg": "4.4.3"
   },
   "devDependencies": {
+    "async": "1.5.2",
     "chai": "3.4.1",
     "grunt": "0.4.5",
     "grunt-cli": "0.1.13",
@@ -15,6 +16,6 @@
     "mocha-junit-reporter": "1.6.1"
   },
   "scripts": {
-    "test": "grunt verify --force"
+    "test": "./node_modules/mocha/bin/mocha test/generic.spec.js"
   }
 }
