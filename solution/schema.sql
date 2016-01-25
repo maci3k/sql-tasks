@@ -1,75 +1,83 @@
 DROP SCHEMA IF EXISTS public CASCADE;
 CREATE SCHEMA public;
 
-CREATE SEQUENCE post_id_seq
+--SEQUENCES
+
+CREATE SEQUENCE address_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
-CREATE SEQUENCE thread_id_seq
+CREATE SEQUENCE user_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
-CREATE SEQUENCE users_id_seq
+CREATE SEQUENCE product_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
+CREATE SEQUENCE assessment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
-CREATE TABLE post (
-  id          BIGINT                                 DEFAULT nextval('post_id_seq'::regclass) NOT NULL,
-  body        TEXT,
-  author_id   BIGINT                                 NOT NULL,
-  thread_id   BIGINT                                 NOT NULL,
-  create_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+CREATE SEQUENCE order_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+--CORE MODEL
+
+CREATE TABLE address (
+  id bigint DEFAULT nextval('address_id_seq'::regclass) NOT NULL,
+  street TEXT NOT NULL,
+  number BIGINT NOT NULL,
+  city TEXT NOT NULL,
+  zip_code TEXT NOT NULL,
+  country TEXT NOT NULL
 );
-
-
-CREATE TABLE thread (
-  id          BIGINT                                 DEFAULT nextval('thread_id_seq'::regclass) NOT NULL,
-  title       CHARACTER VARYING(256)                 NOT NULL,
-  body        TEXT,
-  author_id   BIGINT                                 NOT NULL,
-  create_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
-);
-
 
 CREATE TABLE users (
-  id          BIGINT                                 DEFAULT nextval('users_id_seq'::regclass) NOT NULL,
-  email       CHARACTER VARYING(256)                 NOT NULL
+  id BIGINT DEFAULT nextval('user_id_seq'::regclass) NOT NULL,
+  nickname TEXT UNIQUE NOT NULL,
+  email TEXT UNIQUE NOT NULL,
+  gender TEXT NOT NULL
 );
 
+CREATE TABLE product (
+  id bigint DEFAULT nextval('product_id_seq'::regclass) NOT NULL,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL,
+  price MONEY NOT NULL
+);
 
-ALTER TABLE ONLY post
-ADD CONSTRAINT post_pk PRIMARY KEY (id);
+CREATE TABLE assessment (
+  id bigint DEFAULT nextval('assessment_id_seq'::regclass) NOT NULL,
+  product_id INTEGER NOT NULL,
+  rating INTEGER NOT NULL,
+  comment TEXT NOT NULL
+);
 
+CREATE TABLE orders (
+  id bigint DEFAULT nextval('order_id_seq'::regclass) NOT NULL,
+  order_date DATE NOT NULL
+);
 
-ALTER TABLE ONLY thread
-ADD CONSTRAINT thread_pk PRIMARY KEY (id);
-
-
-ALTER TABLE ONLY users
-ADD CONSTRAINT unique_email UNIQUE (email);
-
-
-ALTER TABLE ONLY users
-ADD CONSTRAINT users_pk PRIMARY KEY (id);
-
-
-ALTER TABLE ONLY post
-ADD CONSTRAINT fk___post___author FOREIGN KEY (author_id) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
-ALTER TABLE ONLY post
-ADD CONSTRAINT fk___post___thread FOREIGN KEY (id) REFERENCES thread (id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
-ALTER TABLE ONLY thread
-ADD CONSTRAINT fk___thread___author FOREIGN KEY (id) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE;
+--PRIMARY KEYS
+ALTER TABLE ONLY address ADD CONSTRAINT address_PK PRIMARY KEY (id);
+ALTER TABLE ONLY users ADD CONSTRAINT user_PK PRIMARY KEY (id);
+ALTER TABLE ONLY product ADD CONSTRAINT product_PK PRIMARY KEY (id);
+ALTER TABLE ONLY assessment ADD CONSTRAINT assessment_PK PRIMARY KEY (id);
+ALTER TABLE ONLY orders ADD CONSTRAINT order_PK PRIMARY KEY (id);
