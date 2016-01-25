@@ -7,7 +7,7 @@ module.exports = function (grunt)
         mochaTest: {
             options: {
                 recursive: true,
-                src: ['test/**/*.spec.js'],
+                src: ['test/generic.spec.js'],
                 ui: 'bdd'
             },
             default: {
@@ -31,5 +31,5 @@ module.exports = function (grunt)
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.registerTask('verify', ['mochaTest:verify']);
-    grunt.registerTask('default', ['mochaTest:default']);
+    grunt.registerTask('test', ['mochaTest:default']);
 };
