@@ -17,10 +17,9 @@ pg.defaults.poolSize = 2;
 
 var pgConnect = Promise.promisify(pg.connect, pg);
 
-// TODO set some generic config
 var config = {
     db: {
-        connectionUrl: process.env.DATABASE_URL || 'postgres://realskill:realskill@localhost/sql-tasks'
+        connectionUrl: process.env.DATABASE_URL || 'postgres://realskill:realskill@localhost/realskill'
     }
 };
 
@@ -62,6 +61,9 @@ function parse(spec)
                     obj.body = getFileContents(str.substr(10, str.indexOf('\n')));
                 } else {
                     obj.body = str.substr(str.indexOf('\n'), str.length);
+                    if (str.indexOf('\n') > 9) {
+                        obj.comment = str.substr(10, str.indexOf('\n') - 10);
+                    }
                 }
                 obj.expects = [];
             } else if ('expect' === str.substr(0, 6)) {
@@ -70,6 +72,9 @@ function parse(spec)
                     obj.body = getFileContents(str.substr(7, str.indexOf('\n')));
                 } else {
                     obj.body = str.substr(str.indexOf('\n'), str.length);
+                    if (str.indexOf('\n') > 6) {
+                        obj.comment = str.substr(7, str.indexOf('\n') - 7);
+                    }
                 }
             } else if (0 === str.length) {
                 resolve(false);
@@ -121,13 +126,10 @@ function executeSql(specObj)
                     item.result = result.rows;
                 }).catch(function (err)
                 {
-                    // TODO consider how we can do assertions on errors
-                    item.result = JSON.stringify({
-                        error: err.cause.toString(),
-                        code: err.cause.code,
-                        hint: err.cause.hint,
-                        char: err.cause.position
-                    });
+                    item.result = [{
+                        name: err.cause.name,
+                        code: 'SQL-' + err.cause.code
+                    }];
                 }).finally(function ()
                 {
                     resolve(item)
@@ -143,9 +145,9 @@ describe('Generic SQL test runner', function ()
     async.waterfall([
         function (callback)
         {
-            it('Prase tests scenerios and execute SQL', function (done)
+            it('Parse tests scenarios and execute SQL', function (done)
             {
-                readFile(__dirname + '/expects.sql', 'utf8').then(parse).then(executeSql).then(function (result)
+                readFile(__dirname + '/scenario.sql', 'utf8').then(parse).then(executeSql).then(function (result)
                 {
                     callback(null, result);
                     done();
@@ -156,12 +158,13 @@ describe('Generic SQL test runner', function ()
     {
         async.each(specObject, function (stmt, callback)
         {
-            var label = stmt.body.length > 100 ? stmt.body.substr(0, stmt.body.indexOf('\n')) + '...' : stmt.body;
-            describe('Statement \'' + label + '\'', function ()
+            var label = 'Statement ' + (stmt.comment || stmt.body);
+            describe(label, function ()
             {
                 stmt.expects.forEach(function (expectValue)
                 {
-                    it('should return valid data set\n', function (done)
+                    var expectLabel = 'should return ' + (expectValue.comment || 'should return valid data set');
+                    it(expectLabel, function (done)
                     {
                         expect(stmt.result).to.eql(expectValue.body);
                         done();
