@@ -1,50 +1,65 @@
-# PostgreSQL scaffolding for RealSkill
+# PostgreSQL - simple view
 
-You can quickly create PostgreSQL tasks by cloning this repository. 
-The scaffolding provide PostgreSQL driver configuration, mocha tests setup and simple SQL test scenarios runner.
+## Summary
+
+Primitive one-table schema with example 20 records is provided. The table contains even too specific information about dog breeds size. The task is to provide SQL view that will horizontally aggregate sizes and also convert measures units.
+
+## Goal
+
+Provided `breed` table contains following breed size description columns:
+
+```
+male_height_min
+male_height_max
+male_weight_min
+male_weight_max
+female_height_min
+female_height_max
+female_weight_min
+female_weight_max
+```
+We want to be able to roughly order breeds by height and weight. With structure above it's a bit difficult and may cause unnecessary query complexity. The way it has to solved is horizontally aggregate individually height and weight; regardless of minimum, 
+maximum and whether is male or female. Other words we want to calculate average value of height and average value of weight for each breed regardlessly. Finally height and weight should be cast as an integer type.
+
+Second part of this task is to convert US measures units to metric SI standard. Table `breed` describe all height values in inches and weight in pounds, but desired units are centimeters and kilograms. For dimension use 2.54 multiplier to get 
+centimeters and for weight 0.4536 multiplier to get kilograms.
+Result data set should be order by weight and height, both descending.
+
+Your aim is to combine all requirements above and provide SQL view named `view_breed`. The view should contain following columns: `id`, `name`, `origin`, `height`, `weight`.
+Please save view creation script in file `solution/view_breed.sql`. 
+
+Table below shows results set of `SELECT * FROM view_breed` of valid solution. 
+
+|id|name|origin|height|weight|
+|----|--------------|--------|----|----|
+| 14 | Newfoundland | Canada | 69 | 57 |
+| 16 | Rottweiler | Germany | 61 | 45 |
+| 1 | Akita | Japan | 64 | 44 |
+| 20 | German Shepherd Dog | Germany | 61 | 39 |
+| 13 | Labrador Retriever | Canada | 58 | 30 |
+| 12 | Irish Setter | Ireland | 66 | 29 |
+| 11 | Golden Retriever | England | 58 | 29 |
+| 4 | Boxer | Germany | 58 | 29 |
+| 8 | Collie | Scotland | 61 | 28 |
+| 7 | Chow Chow | China | 46 | 26 |
+| 5 | Bull Terrier | England | 53 | 25 |
+| 10 | Dalmatian | Yugoslavia | 53 | 23 |
+| 9 | Border Collie | Great Britain | 51 | 17 |
+| 2 | American Cocker Spaniel | United States | 38 | 12 |
+| 3 | Beagle | England | 36 | 11 |
+| 18 | Shetland Sheepdog | Scotland | 36 | 9 |
+| 19 | Poodle (Miniature) | Germany | 30 | 7 |
+| 15 | Papillon | France | 23 | 4 |
+| 17 | Yorkshire Terrier | England | 20 | 3 |
+| 6 | Chihuahua | Mexico | 18 | 3 |
 
 ## Setup
 
-### To install dependencies 
+### Install dependencies 
 
 ```
 npm install
 ```
-
-## PgSQL test runner
-
-### Scenarios format
-
-Provided runner parse plain text file as below. For syntax highlighting sql format is recommended.
- 
-```
---statement="../solution/schema.sql"
---statement insert valid row
-INSERT INTO users(email) VALUES ('example@email.com'),('another@email.com');
-SELECT * FROM users;
---expect users list
-id,email
-1,example@email.com
-2,another@email.com
---statement insert incorrect row
-INSERT INTO users(email) VALUES (1,2,3,4)
---expect syntax error
-name,code
-error,SQL-42601
-```
-Scenarios are composed of 2 types of instructions: `statement` and `expect`. Each instruction symbol must be prepended with `--`. Last executed `statement` 
-result is stored and compared with following `expect`. `Statement` and `expected` content can be provided inline (in following lines, before next instruction
- symbol) as well as excluded into separate file (see example above). You can put some inline comment after `--statement` or `--expect` statement if 
- instruction doesn't point to external file. Those comments will be displayed with tests results.
- `Expect` must be a valid CSV data set, with column names in first line. You can expect data set response as well as SQL error. To test error you need to 
- specify 2x2 csv table as follow:
- 
-| name    | code           |
-|---------|----------------|
-| error   | SQL-errorCode  |
-
-Code value must be [valid PostgreSQL error code](http://www.postgresql.org/docs/9.4/static/errcodes-appendix.html#ERRCODES-TABLE) prepended with string `SQL-`.
-Please place your test scenario in `test/scenario.sql` (you can find example scenario file there).
  
 ### Database connection
 
@@ -54,9 +69,9 @@ If you just installed fresh version of PostgreSQL server don't forget to enable 
  file (on most *nix system it's located at `/etc/postgresql/9.4/main/postgresql.conf`). You may also have to adjust Host Based Authentication Policy that is 
  described in `pg_hba.conf` file (recommended authentication method is MD5).
  
-## User, database and schema
+### User, database and schema
 
-### Configuration on *nix systems
+#### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
 *Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompt for password, enter
@@ -65,7 +80,7 @@ You can manually prepare database connection or use command below that will crea
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
 ```
 
-### Configuration on Windows systems
+#### Configuration on Windows systems
 
 Use pgadmin GUI tool to set following configuration:
 ```
