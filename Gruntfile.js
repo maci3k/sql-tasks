@@ -8,7 +8,8 @@ module.exports = function (grunt)
             options: {
                 recursive: true,
                 src: ['test/generic.spec.js'],
-                ui: 'bdd'
+                ui: 'bdd',
+                timeout: 6000
             },
             default: {
                 options: {

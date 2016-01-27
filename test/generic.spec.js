@@ -132,7 +132,7 @@ function executeSql(specObj)
                     }];
                 }).finally(function ()
                 {
-                    resolve(item)
+                    resolve(item);
                 });
             }));
         });
@@ -153,7 +153,7 @@ describe('Generic SQL test runner', function ()
                     done();
                 });
             });
-        },
+        }
     ], function (err, specObject)
     {
         async.each(specObject, function (stmt, callback)
@@ -169,7 +169,7 @@ describe('Generic SQL test runner', function ()
                         expect(stmt.result).to.eql(expectValue.body);
                         done();
                         return callback();
-                    })
+                    });
                 });
             });
         });

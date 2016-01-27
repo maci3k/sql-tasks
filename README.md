@@ -1,50 +1,52 @@
-# PostgreSQL scaffolding for RealSkill
+# SQL - procedures & triggers for materialized views
 
-You can quickly create PostgreSQL tasks by cloning this repository. 
-The scaffolding provide PostgreSQL driver configuration, mocha tests setup and simple SQL test scenarios runner.
+## Summary
+Materialized view is a database object that contains the results of a query, it is use to increase the speed of queries on very large databases. Now, you are 
+provided with a simplified database of orders storing the large amounts of data and using two materialized views. Something goes wrong, because the views are 
+the same despite changes in the database. 
+
+## Goals
+
+The database consist of three tables:
+
+| customer   | product  | orders            |  
+|------------|----------|-------------------|
+| id (PK)    | id (PK)  | id (PK)           | 
+| first_name | name     | customer_id (FK)  | 
+| last_name  | price    | product_id (FK)   |
+| email      |          | order_date        |
+|            |          | product_quantity  |
+
+ and two views:
+ 
+* `daily_sum_of_orders` - the sum of the products bought every day
+
+| order_date | product_total  |
+|------------|----------------|
+| 2016-01-25 | 56             | 
+| 2016-01-24 | 60             | 
+| ...        | ...            | 
+
+
+* `top_100_buyers` - 100 customers who spend the most money
+
+| first_name   | last_name  | total_amount      |  
+|--------------|------------|-------------------|
+| Craig        | Rivera     | 4686.65           | 
+| Douglas      | Brooks     | 4664.66           | 
+| ...          | ...        | ...               |
+
+
+Modify **daily_sum_of_orders.sql** and **top_100_buyers.sql** files so that the views were refreshed when the change in the database affecting them.
+
 
 ## Setup
 
-### To install dependencies 
+### Install dependencies 
 
 ```
 npm install
 ```
-
-## PgSQL test runner
-
-### Scenarios format
-
-Provided runner parse plain text file as below. For syntax highlighting sql format is recommended.
- 
-```
---statement="../solution/schema.sql"
---statement insert valid row
-INSERT INTO users(email) VALUES ('example@email.com'),('another@email.com');
-SELECT * FROM users;
---expect users list
-id,email
-1,example@email.com
-2,another@email.com
---statement insert incorrect row
-INSERT INTO users(email) VALUES (1,2,3,4)
---expect syntax error
-name,code
-error,SQL-42601
-```
-Scenarios are composed of 2 types of instructions: `statement` and `expect`. Each instruction symbol must be prepended with `--`. Last executed `statement` 
-result is stored and compared with following `expect`. `Statement` and `expected` content can be provided inline (in following lines, before next instruction
- symbol) as well as excluded into separate file (see example above). You can put some inline comment after `--statement` or `--expect` statement if 
- instruction doesn't point to external file. Those comments will be displayed with tests results.
- `Expect` must be a valid CSV data set, with column names in first line. You can expect data set response as well as SQL error. To test error you need to 
- specify 2x2 csv table as follow:
- 
-| name    | code           |
-|---------|----------------|
-| error   | SQL-errorCode  |
-
-Code value must be [valid PostgreSQL error code](http://www.postgresql.org/docs/9.4/static/errcodes-appendix.html#ERRCODES-TABLE) prepended with string `SQL-`.
-Please place your test scenario in `test/scenario.sql` (you can find example scenario file there).
  
 ### Database connection
 
@@ -54,9 +56,9 @@ If you just installed fresh version of PostgreSQL server don't forget to enable 
  file (on most *nix system it's located at `/etc/postgresql/9.4/main/postgresql.conf`). You may also have to adjust Host Based Authentication Policy that is 
  described in `pg_hba.conf` file (recommended authentication method is MD5).
  
-## User, database and schema
+### User, database and schema
 
-### Configuration on *nix systems
+#### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
 *Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompt for password, enter
@@ -65,7 +67,7 @@ You can manually prepare database connection or use command below that will crea
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
 ```
 
-### Configuration on Windows systems
+#### Configuration on Windows systems
 
 Use pgadmin GUI tool to set following configuration:
 ```
@@ -81,3 +83,4 @@ Database and schema owner must be set to `realskill` user.
     npm test
 
 
+Good luck!
