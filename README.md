@@ -1,9 +1,9 @@
 # SQL - procedures & triggers for materialized views
 
 ## Summary
-Materialized view is a database object that contains the results of a query, it is use to increase the speed of queries on very large databases. Now, you are 
-provided with a simplified database of orders storing the large amounts of data and using two materialized views. Something goes wrong, because the views are 
-the same despite changes in the database. 
+Materialized views is a database object that contains the results of a query and represent itself like a regular table. 
+They are used to increase the performance on complex schemas with large records amount and simplify queries. 
+In this task simple schema is provided. Two materialized views are already created, but doesn't works as it is desired. Any change in physical tables data are not reflected in materialized views based on that tables.
 
 ## Goals
 
@@ -37,7 +37,7 @@ The database consist of three tables:
 | ...          | ...        | ...               |
 
 
-Modify **daily_sum_of_orders.sql** and **top_100_buyers.sql** files so that the views were refreshed when the change in the database affecting them.
+Modify **daily_sum_of_orders.sql** and **top_100_buyers.sql** files so that the views refresh every time the data change in the depended physical tables. Other words, provide solution that will keep in sync materialized views with actual data state.
 
 
 ## Setup
