@@ -1,4 +1,5 @@
 --statement="./schema.sql"
+--statement="./data.sql"
 --statement="../solution/view_breed.sql"
 --statement select basic breed information
 SELECT * FROM view_breed;
