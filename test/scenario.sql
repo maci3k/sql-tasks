@@ -1,13 +1,17 @@
---statement="../solution/schema.sql"
---statement insert valid row
-INSERT INTO users(email) VALUES ('example@email.com'),('another@email.com');
-SELECT * FROM users;
---expect users list
-id,email
-1,example@email.com
-2,another@email.com
---statement insert incorrect row
-INSERT INTO users(email) VALUES (1,2,3,4)
---expect syntax error
-name,code
-error,SQL-42601
+--statement="./schema.sql"
+--statement="./data.sql"
+--statement="../solution/query.sql"
+--expect aggregated breeds objects grouped by origin
+origin,count,breeds
+Canada,2,![{"name" : "Labrador Retriever", "family" : "gundog, retriever"}, {"name" : "Newfoundland", "family" : "livestock dog, sheepdog, mastiff"}]!
+China,1,![{"name" : "Chow Chow", "family" : "spitz, northern (companion)"}]!
+England,4,![{"name" : "Beagle", "family" : "scenthound"}, {"name" : "Yorkshire Terrier", "family" : "terrier"}, {"name" : "Bull Terrier", "family" : "terrier, mastiff (bull)"}, {"name" : "Golden Retriever", "family" : "gundog, retriever"}]!
+France,1,![{"name" : "Papillon", "family" : "spitz, spaniel, companion"}]!
+Germany,4,![{"name" : "German Shepherd Dog", "family" : "livestock, herding"}, {"name" : "Boxer", "family" : "livestock dog, mastiff (bulldog)"}, {"name" : "Rottweiler", "family" : "livestock dog, sheepdog, mastiff (draft/cattle)"}, {"name" : "Poodle (Miniature)", "family" : "gun dog, companion, water dog"}]!
+Great Britain,1,![{"name" : "Border Collie", "family" : "livestock, herding"}]!
+Ireland,1,![{"name" : "Irish Setter", "family" : "gundog, setter, pointer"}]!
+Japan,1,![{"name" : "Akita", "family" : "spitz, northern (hunting)"}]!
+Mexico,1,![{"name" : "Chihuahua", "family" : "companion, southern (pariah)"}]!
+Scotland,2,![{"name" : "Shetland Sheepdog", "family" : "livestock, herding"}, {"name" : "Collie", "family" : "livestock, herding"}]!
+United States,1,![{"name" : "American Cocker Spaniel", "family" : "gundog, spaniel"}]!
+Yugoslavia,1,![{"name" : "Dalmatian", "family" : "scenthound, pointer"}]!

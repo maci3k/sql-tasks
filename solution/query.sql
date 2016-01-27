@@ -1,0 +1,2 @@
+-- Write your solution here
+-- For tests assertion purpose please cast breeds json field into text data type.

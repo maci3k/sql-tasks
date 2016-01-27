@@ -1,50 +1,56 @@
-# PostgreSQL scaffolding for RealSkill
+# PostgreSQL - simple view
 
-You can quickly create PostgreSQL tasks by cloning this repository. 
-The scaffolding provide PostgreSQL driver configuration, mocha tests setup and simple SQL test scenarios runner.
+## Summary
+
+PostgreSQL 9.3 introduced json support to the database. One of many improvements was ability to aggregate rows set into json array. Next version - 9.4 introduced building json in convenient way on the data query language level. This task examine knowledge 
+of both that capabilities.
+
+## Goal
+
+Table `breed` describe dogs breeds with few basic characteristics like origin, original function or sizes. The goal of this task is to aggregate breeds by their origin so that gives a 3-column result set as shown table below.
+
+| origin | count | breeds |
+|--------|-------|--------|
+| Canada | 2 | json |
+| China | 1 | json |
+| England | 4 | json |
+| France | 1 | json |
+| Germany | 4 | json |
+| Great Britain | 1 | json |
+| Ireland | 1 | json |
+| Japan | 1 | json |
+| Mexico | 1 | json |
+| Scotland | 2 | json |
+| United States | 1 | json |
+| Yugoslavia | 1 | json |
+
+Column `count` should be a total number of breeds from each origin. 
+Field `breeds` should contain json array of objects with breeds originated each origin. Each object of that array should have two properties: `name` and `family` which are values of corresponding `breed` table columns. Listing below represent `breeds` column 
+value for first group - Canada.
+
+```
+[
+    {
+        "name" : "Labrador Retriever", 
+        "family" : "gundog, retriever"
+    }, 
+    {
+        "name" : "Newfoundland",
+        "family" : "livestock dog, sheepdog, mastiff"
+    }
+]
+```
+
+Finally, sort result alphabetically by origin.  
+*For tests assertion purpose, please cast breeds `json` field into `text` data type.*
 
 ## Setup
 
-### To install dependencies 
+### Install dependencies 
 
 ```
 npm install
 ```
-
-## PgSQL test runner
-
-### Scenarios format
-
-Provided runner parse plain text file as below. For syntax highlighting sql format is recommended.
- 
-```
---statement="../solution/schema.sql"
---statement insert valid row
-INSERT INTO users(email) VALUES ('example@email.com'),('another@email.com');
-SELECT * FROM users;
---expect users list
-id,email
-1,example@email.com
-2,another@email.com
---statement insert incorrect row
-INSERT INTO users(email) VALUES (1,2,3,4)
---expect syntax error
-name,code
-error,SQL-42601
-```
-Scenarios are composed of 2 types of instructions: `statement` and `expect`. Each instruction symbol must be prepended with `--`. Last executed `statement` 
-result is stored and compared with following `expect`. `Statement` and `expected` content can be provided inline (in following lines, before next instruction
- symbol) as well as excluded into separate file (see example above). You can put some inline comment after `--statement` or `--expect` statement if 
- instruction doesn't point to external file. Those comments will be displayed with tests results.
- `Expect` must be a valid CSV data set, with column names in first line. You can expect data set response as well as SQL error. To test error you need to 
- specify 2x2 csv table as follow:
- 
-| name    | code           |
-|---------|----------------|
-| error   | SQL-errorCode  |
-
-Code value must be [valid PostgreSQL error code](http://www.postgresql.org/docs/9.4/static/errcodes-appendix.html#ERRCODES-TABLE) prepended with string `SQL-`.
-Please place your test scenario in `test/scenario.sql` (you can find example scenario file there).
  
 ### Database connection
 
@@ -54,9 +60,9 @@ If you just installed fresh version of PostgreSQL server don't forget to enable 
  file (on most *nix system it's located at `/etc/postgresql/9.4/main/postgresql.conf`). You may also have to adjust Host Based Authentication Policy that is 
  described in `pg_hba.conf` file (recommended authentication method is MD5).
  
-## User, database and schema
+### User, database and schema
 
-### Configuration on *nix systems
+#### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
 *Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompt for password, enter
@@ -65,7 +71,7 @@ You can manually prepare database connection or use command below that will crea
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
 ```
 
-### Configuration on Windows systems
+#### Configuration on Windows systems
 
 Use pgadmin GUI tool to set following configuration:
 ```
