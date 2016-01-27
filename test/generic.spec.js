@@ -83,7 +83,7 @@ function parse(spec)
             }
             obj.body = obj.body.replace(/^\s+|\s+$/g, '');
             if (SYMBOLS.EXPECT === obj.type) {
-                var converter = new Converter({noheader: false});
+                var converter = new Converter({noheader: false, quote:'!'});
                 converter.fromString(obj.body, function (err, json)
                 {
                     obj.body = json;
@@ -116,27 +116,22 @@ function executeSql(specObj)
 {
     return getClient().then(function (client)
     {
-        var promises = [];
-        specObj.forEach(function (item)
+        return Promise.each(specObj, function (item)
         {
-            promises.push(new Promise(function (resolve)
+            return client.query(item.body).then(function (result)
             {
-                client.query(item.body).then(function (result)
-                {
-                    item.result = result.rows;
-                }).catch(function (err)
-                {
-                    item.result = [{
-                        name: err.cause.name,
-                        code: 'SQL-' + err.cause.code
-                    }];
-                }).finally(function ()
-                {
-                    resolve(item)
-                });
-            }));
-        });
-        return Promise.all(promises).finally(client.done);
+                item.result = result.rows;
+            }).catch(function (err)
+            {
+                item.result = [{
+                    name: err.cause.name,
+                    code: 'SQL-' + err.cause.code
+                }];
+            }).finally(function ()
+            {
+                return item;
+            });
+        }).finally(client.done);
     });
 }
 
