@@ -1,0 +1,10 @@
+INSERT INTO users (nickname, first_name, last_name, birth_date) VALUES ('cfisher0', 'Chris', 'Fisher', '1985-09-30');
+INSERT INTO users (nickname, first_name, last_name, birth_date) VALUES ('kmatthews1', 'Kimberly', 'Matthews', '1990-06-25');
+INSERT INTO users (nickname, first_name, last_name, birth_date) VALUES ('tpeters2', 'Todd', 'Peters', '1988-09-08');
+INSERT INTO users (nickname, first_name, last_name, birth_date) VALUES ('blee3', 'Betty', 'Lee', '1997-10-07');
+INSERT INTO users (nickname, first_name, last_name, birth_date) VALUES ('smoreno4', 'Sharon', 'Moreno', '1989-06-15');
+INSERT INTO users (nickname, first_name, last_name, birth_date) VALUES ('imiller5', 'Irene', 'Miller', '1986-03-26');
+INSERT INTO users (nickname, first_name, last_name, birth_date) VALUES ('jlopez6', 'John', 'Lopez', '1993-08-24');
+INSERT INTO users (nickname, first_name, last_name, birth_date) VALUES ('acole7', 'Anthony', 'Cole', '1997-09-07');
+INSERT INTO users (nickname, first_name, last_name, birth_date) VALUES ('rcruz8', 'Rachel', 'Cruz', '1971-04-10');
+INSERT INTO users (nickname, first_name, last_name, birth_date) VALUES ('dparker9', 'Denise', 'Parker', '1967-02-24');
