@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs');
 var Promise = require('bluebird');
 var readFile = Promise.promisify(require('fs').readFile);
@@ -5,6 +7,9 @@ var expect = require('chai').expect;
 var async = require('async');
 var Converter = require('csvtojson').Converter;
 var pg = require('pg');
+
+var highlighStart = '\x1b[31m';
+var highlightEnd = '\x1b[0m';
 
 /*
  This enforce driver to cast bigint (64-bits length) values into javascript (32-bit) integer.
@@ -22,6 +27,8 @@ var config = {
         connectionUrl: process.env.DATABASE_URL || 'postgres://realskill:realskill@localhost/realskill'
     }
 };
+
+var scenarioFilename = 'scenario.sql';
 
 var SYMBOLS = {
     DELIMITER: '--',
@@ -83,7 +90,10 @@ function parse(spec)
             }
             obj.body = obj.body.replace(/^\s+|\s+$/g, '');
             if (SYMBOLS.EXPECT === obj.type) {
-                var converter = new Converter({noheader: false});
+                var converter = new Converter({
+                    noheader: false,
+                    quote: '!'
+                });
                 converter.fromString(obj.body, function (err, json)
                 {
                     obj.body = json;
@@ -116,60 +126,75 @@ function executeSql(specObj)
 {
     return getClient().then(function (client)
     {
-        var promises = [];
-        specObj.forEach(function (item)
+        return Promise.each(specObj, function (item)
         {
-            promises.push(new Promise(function (resolve)
+            return client.query(item.body).then(function (result)
             {
-                client.query(item.body).then(function (result)
-                {
-                    item.result = result.rows;
-                }).catch(function (err)
-                {
-                    item.result = [{
-                        name: err.cause.name,
-                        code: 'SQL-' + err.cause.code
-                    }];
-                }).finally(function ()
-                {
-                    resolve(item)
-                });
-            }));
-        });
-        return Promise.all(promises).finally(client.done);
+                item.result = result.rows;
+            }).catch(function (err)
+            {
+                item.result = [{
+                    name: err.cause.name,
+                    code: 'SQL-' + err.cause.code
+                }];
+                item.error = err;
+            }).finally(function ()
+            {
+                return item;
+            });
+        }).finally(client.done);
     });
 }
 
-describe('Generic SQL test runner', function ()
+function printSqlError(stmt)
+{
+    console.log('   ', highlighStart, ' ! ' + stmt.error.toString());
+    if (stmt.error.detail) {
+        console.log('        detail: ' + stmt.error.detail);
+    }
+    console.log('        code: ' + stmt.error.code);
+    console.log('        routine: ' + stmt.error.routine, highlightEnd);
+}
+
+describe('RealSkill SQL runner', function ()
 {
     async.waterfall([
         function (callback)
         {
             it('Parse tests scenarios and execute SQL', function (done)
             {
-                readFile(__dirname + '/scenario.sql', 'utf8').then(parse).then(executeSql).then(function (result)
+                readFile(__dirname + '/' + scenarioFilename, 'utf8').then(parse).then(executeSql).then(function (result)
                 {
                     callback(null, result);
                     done();
                 });
             });
-        },
+        }
     ], function (err, specObject)
     {
-        async.each(specObject, function (stmt, callback)
+        describe('Evaluate scenario', function ()
         {
-            var label = 'Statement ' + (stmt.comment || stmt.body);
-            describe(label, function ()
+            async.each(specObject, function (stmt, callback)
             {
-                stmt.expects.forEach(function (expectValue)
+                var label = 'Statement ' + (stmt.comment || stmt.body);
+                if (stmt.error && !stmt.expects.length) {
+                    printSqlError(stmt);
+                }
+                describe(label, function ()
                 {
-                    var expectLabel = 'should return ' + (expectValue.comment || 'should return valid data set');
-                    it(expectLabel, function (done)
+                    stmt.expects.forEach(function (expectValue)
                     {
-                        expect(stmt.result).to.eql(expectValue.body);
-                        done();
-                        return callback();
-                    })
+                        var expectLabel = 'should return ' + (expectValue.comment || 'should return valid data set');
+                        it(expectLabel, function (done)
+                        {
+                            expect(stmt.result).to.eql(expectValue.body);
+                            if (stmt.error) {
+                                printSqlError(stmt);
+                            }
+                            done();
+                            return callback();
+                        });
+                    });
                 });
             });
         });
