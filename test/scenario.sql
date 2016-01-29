@@ -54,7 +54,7 @@
  11,ltaylor9,Linda,Taylor,1964-01-14,ltaylor9@est.com
 
 --statement
- INSERT INTO users (nickname, first_name, last_name, birth_date, email) values ('ltaylor9', 'Linda', 'Taylor', '1964-01-14','test10@test.com');
+ INSERT INTO users (nickname, first_name, last_name, birth_date, email) values ('ltaylord9', 'Linda', 'Taylor', '1964-01-14','test10@test.com');
 
 --expect error when insert user without email that already exist
  code, name
