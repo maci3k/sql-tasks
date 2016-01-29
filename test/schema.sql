@@ -40,7 +40,7 @@ CREATE SEQUENCE order_id_seq
 
 --CORE MODEL
 
-CREATE TaABLE address (
+CREATE TABLE address (
   id BIGINT DEFAULT nextval('address_id_seq'::regclass) NOT NULL,
   street TEXT NOT NULL,
   number BIGINT NOT NULL,
