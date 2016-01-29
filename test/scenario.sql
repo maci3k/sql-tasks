@@ -1,4 +1,5 @@
---statement="../solution/schema.sql"
+--statement="schema.sql"
+--statement="../solution/alters.sql"
 --statement="data.sql"
 
 --statement

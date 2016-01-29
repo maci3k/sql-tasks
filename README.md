@@ -1,19 +1,23 @@
 # SQL - Foreign Keys and Unique Index
 
 ## Summary
-You are provided with a simplified "online shop" database schema with `address`, `users`, `product`, `order` and `assessment` tables. Unfortunately, it 
-turned out that some of constraints are missing. Fix them according to the description - pay attention to the **keywords**.
+You starts with a simplified "online shop" schema that have `address`, `users`, `product`, `order` and `assessment` tables. Unfortunately, it 
+turned out that some reflations are missing. Add necessary columns and constraints according to the requirements.
 
 ## Goals
 
-Each user must have an original (not used by another user) **nickname** and **email**. It is required to each of them should have an **address**. In the 
-`address` table isn't allowed to add rows with exactly the same addresses but two users can have the same address. Each `product` belong to a specific **user**. The 
-**user** can buy the **product** and this information is stored in a `orders` table. The **user** can also assess the **product** and comment it.
+First part of this task it ensure schema consistency by modifications that will add following relations:
 
-Names of new properties should be created according to the pattern: **singularNameOfTable_id** for example **user_id**. The necessary modifications add to 
-`solution/schema.sql` file.
+* from `users` to `address` and name the column `address_id`
+* from `product` to `users` and name the column `user_id`
+* from `orders` to `product` and name the column `product_id`
+* from `orders` to `user` and name the column `user_id`
+* from `assessment` to `product` and name the column `product_id`
+* from `assessment` to `users` and name the column `users_id`
 
-### Database structure without constraints:
+Your modifications should also guarantee data consistency after `DELETE` and `UPDATE` operations. Other words, if some product has been delete, all dependent rows of orders and assessment should be also delete. 
+
+### Schema structure without consistency constraints:
 
 | address   | users    | product     | orders      | assessment  | 
 |-----------|----------|-------------|-------------|-------------| 
@@ -24,6 +28,11 @@ Names of new properties should be created according to the pattern: **singularNa
 | zip_code  |          |             |             |             |
 | country   |          |             |             |             |
 
+Second part of task is to provide appropriate constraints that will ensure uniqueness of following fields:
+
+* `users`.`nickname`
+* `users`.`email`
+* `address`'s fields: `street`, `number`, `city`, `zip_code` and `country` taken together
 
 
 ## Setup

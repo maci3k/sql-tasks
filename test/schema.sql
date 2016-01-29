@@ -40,8 +40,8 @@ CREATE SEQUENCE order_id_seq
 
 --CORE MODEL
 
-CREATE TABLE address (
-  id bigint DEFAULT nextval('address_id_seq'::regclass) NOT NULL,
+CREATE TaABLE address (
+  id BIGINT DEFAULT nextval('address_id_seq'::regclass) NOT NULL,
   street TEXT NOT NULL,
   number BIGINT NOT NULL,
   city TEXT NOT NULL,
@@ -51,27 +51,26 @@ CREATE TABLE address (
 
 CREATE TABLE users (
   id BIGINT DEFAULT nextval('user_id_seq'::regclass) NOT NULL,
-  nickname TEXT UNIQUE NOT NULL,
-  email TEXT UNIQUE NOT NULL,
+  nickname TEXT NOT NULL,
+  email TEXT NOT NULL,
   gender TEXT NOT NULL
 );
 
 CREATE TABLE product (
-  id bigint DEFAULT nextval('product_id_seq'::regclass) NOT NULL,
+  id BIGINT DEFAULT nextval('product_id_seq'::regclass) NOT NULL,
   name TEXT NOT NULL,
   description TEXT NOT NULL,
   price MONEY NOT NULL
 );
 
 CREATE TABLE assessment (
-  id bigint DEFAULT nextval('assessment_id_seq'::regclass) NOT NULL,
-  product_id INTEGER NOT NULL,
+  id BIGINT DEFAULT nextval('assessment_id_seq'::regclass) NOT NULL,
   rating INTEGER NOT NULL,
   comment TEXT NOT NULL
 );
 
 CREATE TABLE orders (
-  id bigint DEFAULT nextval('order_id_seq'::regclass) NOT NULL,
+  id BIGINT DEFAULT nextval('order_id_seq'::regclass) NOT NULL,
   order_date DATE NOT NULL
 );
 
