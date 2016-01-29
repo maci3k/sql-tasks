@@ -18,10 +18,10 @@ female_height_max
 female_weight_min
 female_weight_max
 ```
-We want to be able to roughly order breeds by height and weight. With structure above it's a bit difficult and may cause unnecessary query complexity. The way it has to solved is horizontally aggregate individually height and weight; regardless of minimum, 
-maximum and whether is male or female. Other words we want to calculate average value of height and average value of weight for each breed regardlessly. Finally height and weight should be cast as an integer type.
+We want to be able to roughly order breeds by height and weight. With structure above it's a bit difficult and may cause unnecessary query complexity. The way it has to be solved is horizontally aggregate individually height and weight; regardless of minimum, 
+maximum and whether is male or female. Other words we want to calculate average value of height and average value of weight for each breed regardlessly. Finally height and weight should be cast to an integer.
 
-Second part of this task is to convert US measures units to metric SI standard. Table `breed` describe all height values in inches and weight in pounds, but desired units are centimeters and kilograms. For dimension use 2.54 multiplier to get 
+Second part of this task is to convert US measures units to metric SI standard. Table `breed` describes all height values in inches and weight in pounds, but desired units are centimeters and kilograms. For dimension use 2.54 multiplier to get 
 centimeters and for weight 0.4536 multiplier to get kilograms.
 Result data set should be order by weight and height, both descending.
 
@@ -64,8 +64,8 @@ npm install
 ### Database connection
 
 You are required to provide valid connection to working PostgreSQL instance. This scaffolding is tested on PostgreSQL 9.4, however it should work on other 
-database server version. 
-If you just installed fresh version of PostgreSQL server don't forget to enable listening, setting `listen_address = 'localhost'` in PostgreSQL configuration
+database versions. 
+If you just have installed fresh version of PostgreSQL server don't forget to enable listening, setting `listen_address = 'localhost'` in PostgreSQL configuration
  file (on most *nix system it's located at `/etc/postgresql/9.4/main/postgresql.conf`). You may also have to adjust Host Based Authentication Policy that is 
  described in `pg_hba.conf` file (recommended authentication method is MD5).
  
@@ -74,7 +74,7 @@ If you just installed fresh version of PostgreSQL server don't forget to enable 
 ### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
-*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompt for password, enter
+*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompted for password, enter
  password `realskill`.
 ```  
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
@@ -102,15 +102,15 @@ Create user `realskill` with `realskill` password.
 createuser -P -U postgres -W realskill
 ```
 
-You will be prompt for new user password twice, then postgres superuser password (default is **postgres**).
+You will be prompted for new user password twice, then postgres superuser password (default is **postgres**).
 
-Create database `realskill` and set ownership to user `realskill` (you will be prompt for **postgres** password).
+Create database `realskill` and set ownership to user `realskill` (you will be prompted for **postgres** password).
 
 ```
 createdb -O realskill -U postgres -W realskill
 ```
 
-Change schema public (of realskill database) ownership to user `realskill` (you will be prompt for **postgres** password).
+Change schema public (of realskill database) ownership to user `realskill` (you will be prompted for **postgres** password).
 
 ```
 psql -d realskill -U postgres -W -c "ALTER SCHEMA public OWNER TO realskill;"
