@@ -67,7 +67,8 @@ createuser realskill -P && createdb realskill -O realskill && psql -d realskill 
 
 ### Configuration on Windows systems
 
-Use pgadmin GUI tool to set following configuration:
+#### Using GUI tools
+Use pgadmin to set following configuration:
 ```
 user: realskill
 password: realskill
@@ -75,6 +76,30 @@ database: realskill
 schema: public
 ```
 Database and schema owner must be set to `realskill` user.
+
+#### Using command line
+
+Open Windows Command Prompt as administrator ([see help](https://technet.microsoft.com/en-us/library/cc947813.aspx)).
+
+Create user `realskill` with `realskill` password.
+
+```
+createuser -P -U postgres -W realskill
+```
+
+You will be prompt for new user password twice, then postgres superuser password (default is **postgres**).
+
+Create database `realskill` and set ownership to user `realskill` (you will be prompt for **postgres** password).
+
+```
+createdb -O realskill -U postgres -W realskill
+```
+
+Change schema public (of realskill database) ownership to user `realskill` (you will be prompt for **postgres** password).
+
+```
+psql -d realskill -U postgres -W -c "ALTER SCHEMA public OWNER TO realskill;"
+```
 
 ### Run tests
 
