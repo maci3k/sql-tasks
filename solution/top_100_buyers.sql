@@ -6,4 +6,4 @@ GROUP BY first_name, last_name
 ORDER BY total_amount DESC
 LIMIT 100;
 
---here add your solution
+-- Write your solution here
