@@ -1,4 +1,4 @@
-# PostgreSQL - simple view
+# PostgreSQL - JSON builiding and aggregation
 
 ## Summary
 
