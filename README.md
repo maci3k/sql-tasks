@@ -1,4 +1,4 @@
-# SQL - procedures & triggers for materialized views
+# PostgreSQL - procedures & triggers for materialized views
 
 ## Summary
 Materialized views is a database object that contains the results of a query and represent itself like a regular table. 
