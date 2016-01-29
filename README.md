@@ -1,4 +1,4 @@
-# SQL - Foreign Keys and Unique Index
+# PostgreSQL - Foreign Keys and Unique Index
 
 ## Summary
 You starts with a simplified "online shop" schema that have `address`, `users`, `product`, `order` and `assessment` tables. Unfortunately, it 
