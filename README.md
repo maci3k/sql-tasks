@@ -1,7 +1,7 @@
 # PostgreSQL - Foreign Keys and Unique Index
 
 ## Summary
-You starts with a simplified "online shop" schema that has `address`, `users`, `product`, `order` and `assessment` tables. Unfortunately, it 
+You are provided with a simplified "online shop" schema that has `address`, `users`, `product`, `order` and `assessment` tables. Unfortunately, it 
 turned out that some reflations are missing. Add necessary columns and constraints according to the requirements.
 
 ## Goals
