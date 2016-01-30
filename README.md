@@ -34,6 +34,7 @@ Second part of task is to provide appropriate constraints that will ensure uniqu
 * `users`.`email`
 * `address`'s fields: `street`, `number`, `city`, `zip_code` and `country` taken together
 
+All your modifying queries put in the `solution/alters.sql` file.
 
 ## Setup
 
