@@ -2,7 +2,7 @@
 
 ## Summary
 
-PostgreSQL 9.3 introduced json support to the database. One of many improvements was ability to aggregate row set into JSON array. Next version - 9.4 introduced building JSON in convenient way on the data query language level. This task examines knowledge 
+PostgreSQL 9.3 introduced JSON support to the database. One of many improvements was ability to aggregate row set into JSON array. Next version - 9.4 introduced building JSON in convenient way on the data query language level. This task examines knowledge 
 of both those capabilities.
 
 ## Goal
