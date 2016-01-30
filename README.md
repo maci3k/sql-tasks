@@ -2,7 +2,7 @@
 
 ## Summary
 
-PostgreSQL 9.3 introduced json support to the database. One of many improvements was ability to aggregate row set into json array. Next version - 9.4 introduced building json in convenient way on the data query language level. This task examines knowledge 
+PostgreSQL 9.3 introduced json support to the database. One of many improvements was ability to aggregate row set into JSON array. Next version - 9.4 introduced building JSON in convenient way on the data query language level. This task examines knowledge 
 of both those capabilities.
 
 ## Goal
@@ -11,22 +11,21 @@ Table `breed` describes dog breeds with few basic characteristics like origin, o
 
 | origin | count | breeds |
 |--------|-------|--------|
-| Canada | 2 | json |
-| China | 1 | json |
-| England | 4 | json |
-| France | 1 | json |
-| Germany | 4 | json |
-| Great Britain | 1 | json |
-| Ireland | 1 | json |
-| Japan | 1 | json |
-| Mexico | 1 | json |
-| Scotland | 2 | json |
-| United States | 1 | json |
-| Yugoslavia | 1 | json |
+| Canada | 2 | JSON |
+| China | 1 | JSON |
+| England | 4 | JSON |
+| France | 1 | JSON |
+| Germany | 4 | JSON |
+| Great Britain | 1 | JSON |
+| Ireland | 1 | JSON |
+| Japan | 1 | JSON |
+| Mexico | 1 | JSON |
+| Scotland | 2 | JSON |
+| United States | 1 | JSON |
+| Yugoslavia | 1 | JSON |
 
 Column `count` should be a total number of breeds from each origin. 
-Field `breeds` should contain json array of objects with breeds originated each origin. Each object of that array should have two properties: `name` and `family` which are values of corresponding `breed` table columns. Listing below represents `breeds` column 
-value for first group - Canada.
+Field `breeds` should contain json array of objects with breeds originated each country. Each object of that array should have two properties: `name` and `family` which are values of corresponding `breed` table columns. Listing below represents `breeds` column value for first group - Canada.
 
 ```
 [
