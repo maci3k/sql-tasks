@@ -1,0 +1,1 @@
+-- Filter out that data searching for records that contain 'herding' or 'sheepdog' or 'livestock' but not contain 'mastiff'; in `family` or `original_function`

@@ -1,56 +1,32 @@
-# PostgreSQL scaffolding for RealSkill
+# PostgreSQL - Basics of full text search
 
-You can quickly create PostgreSQL tasks by cloning this repository. 
-The scaffolding provide PostgreSQL driver configuration, mocha tests setup and simple SQL test scenarios runner.
+## Summary
+
+Provide SQL query that will efficiently search textual data for words occurrences in specific manner.  
+
+## Goal
+
+There is a table that contains 20 example dog breeds. We would like to filter out that data searching for records that contain:
+
+* 'friendly' and 'family' in `temperament` column
+* 'hunting' or 'gundog' or 'retrieve' in `family`, `original_function` or `temperament`
+* 'herding' or 'sheepdog' or 'livestock' but not contain 'mastiff'; in `family` or `original_function`
+
+Save your queries in files: `solution/search1.sql`, `solution/search2.sql` and `solution/search3.sql`
 
 ## Setup
 
-### To install dependencies 
+### Install dependencies 
 
 ```
 npm install
 ```
-
-## PgSQL test runner
-
-### Scenarios format
-
-Provided runner parse plain text file as below. For syntax highlighting sql format is recommended.
- 
-```
---statement="../solution/schema.sql"
---statement insert valid row
-INSERT INTO users(email) VALUES ('example@email.com'),('another@email.com');
-SELECT * FROM users;
---expect users list
-id,email
-1,example@email.com
-2,another@email.com
---statement insert incorrect row
-INSERT INTO users(email) VALUES (1,2,3,4)
---expect syntax error
-name,code
-error,SQL-42601
-```
-Scenarios are composed of 2 types of instructions: `statement` and `expect`. Each instruction symbol must be prepended with `--`. Last executed `statement` 
-result is stored and compared with following `expect`. `Statement` and `expected` content can be provided inline (in following lines, before next instruction
- symbol) as well as excluded into separate file (see example above). You can put some inline comment after `--statement` or `--expect` statement if 
- instruction doesn't point to external file. Those comments will be displayed with tests results.
- `Expect` must be a valid CSV data set, with column names in first line. You can expect data set response as well as SQL error. To test error you need to 
- specify 2x2 csv table as follow:
- 
-| name    | code           |
-|---------|----------------|
-| error   | SQL-errorCode  |
-
-Code value must be [valid PostgreSQL error code](http://www.postgresql.org/docs/9.4/static/errcodes-appendix.html#ERRCODES-TABLE) prepended with string `SQL-`.
-Please place your test scenario in `test/scenario.sql` (you can find example scenario file there).
  
 ### Database connection
 
 You are required to provide valid connection to working PostgreSQL instance. This scaffolding is tested on PostgreSQL 9.4, however it should work on other 
 database versions. 
-If you just installed fresh version of PostgreSQL server don't forget to enable listening, setting `listen_address = 'localhost'` in PostgreSQL configuration
+If you just have installed fresh version of PostgreSQL server don't forget to enable listening, setting `listen_address = 'localhost'` in PostgreSQL configuration
  file (on most *nix system it's located at `/etc/postgresql/9.4/main/postgresql.conf`). You may also have to adjust Host Based Authentication Policy that is 
  described in `pg_hba.conf` file (recommended authentication method is MD5).
  
