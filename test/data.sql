@@ -1,0 +1,10 @@
+INSERT INTO student (first_name, last_name, email) VALUES ('Diane', 'Banks', 'dbanks0@issuu.com');
+INSERT INTO student (first_name, last_name, email) VALUES ('Frances', 'Castillo', 'fcastillo1@bing.com');
+INSERT INTO student (first_name, last_name, email) VALUES ('Joyce', 'Cole', 'jcole2@delicious.com');
+INSERT INTO student (first_name, last_name, email) VALUES ('Steve', 'Carr', 'scarr3@cafepress.com');
+INSERT INTO student (first_name, last_name, email) VALUES ('Albert', 'Sims', 'asims4@cargocollective.com');
+INSERT INTO student (first_name, last_name, email) VALUES ('Evelyn', 'Wheeler', 'ewheeler5@engadget.com');
+INSERT INTO student (first_name, last_name, email) VALUES ('Rebecca', 'Morales', 'rmorales6@phpbb.com');
+INSERT INTO student (first_name, last_name, email) VALUES ('Christine', 'Gutierrez', 'cgutierrez7@drupal.org');
+INSERT INTO student (first_name, last_name, email) VALUES ('Aaron', 'Rice', 'arice8@plala.or.jp');
+INSERT INTO student (first_name, last_name, email) VALUES ('Andrew', 'Wheeler', 'awheeler9@about.com');
