@@ -1,0 +1,1 @@
+--Write your delete query here

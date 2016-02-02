@@ -1,55 +1,60 @@
-# PostgreSQL scaffolding for RealSkill
+# PostgreSQL - CRUD
 
-You can quickly create PostgreSQL tasks by cloning this repository. 
-The scaffolding provide PostgreSQL driver configuration, mocha tests setup and simple SQL test scenarios runner.
+## Summary
+
+Provide SQL schema and perform basic CRUD operations on it.
+
+## Goals
+
+Create `car` schema with automatically generated **id** (1,2,3...) according to the structure below (`solution/schema.sql`):
+
+| car                        | 
+|----------------------------|
+| id (PK)                    |
+| brand **STR**              |
+| year_of_manufacture **INT**|
+| color **STR**              |
+| weight **FLOAT**           |
+| secondhand **BOOL**        |
+
+Add to the `car` table two rows with data like below (`solution/insert.sql`): 
+
+|  id   | brand       | year_of_manufacture | color        | weight  | secondhand |
+|-------|-------------|---------------------|--------------|---------|------------|
+|  1    | Bentley     | 1988                | red metallic | 1002.72 | false      |
+|  2    | Suzuki      | 2002                | silver       | 1787.25 | true       |
+
+Then execute queries which:
+
+* choose name and weight the heaviest car of all vehicles (`solution/select_the_heaviest_car.sql`)
+
+|  brand  | weight      |
+|---------|-------------|
+|  Suzuki | 1787.25     |
+
+* choose the brand, year of production and color of all unused cars, produced in 2000 (or below), which color is a variation of the red, sorted by the earliest year of production (`solution/select_unused_cars.sql`)
+
+| brand    | year_of_manufacture | color        | 
+|----------|---------------------|--------------|
+| Tata     | 1981                | red          |
+| Bentley  | 1988                | red metallic |
+
+* change the oldest car as used (`solution/update.sql`) 
+
+* remove all used cars, which in 2000 had more than 10 years (`solution/delete.sql`)
 
 ## Setup
 
-### To install dependencies 
+### Install dependencies 
 
 ```
 npm install
 ```
-
-## PgSQL test runner
-
-### Scenarios format
-
-Provided runner parse plain text file as below. For syntax highlighting sql format is recommended.
- 
-```
---statement="../solution/schema.sql"
---statement insert valid row
-INSERT INTO users(email) VALUES ('example@email.com'),('another@email.com');
-SELECT * FROM users;
---expect users list
-id,email
-1,example@email.com
-2,another@email.com
---statement insert incorrect row
-INSERT INTO users(email) VALUES (1,2,3,4)
---expect syntax error
-name,code
-error,SQL-42601
-```
-Scenarios are composed of 2 types of instructions: `statement` and `expect`. Each instruction symbol must be prepended with `--`. Last executed `statement` 
-result is stored and compared with following `expect`. `Statement` and `expected` content can be provided inline (in following lines, before next instruction
- symbol) as well as excluded into separate file (see example above). You can put some inline comment after `--statement` or `--expect` statement if 
- instruction doesn't point to external file. Those comments will be displayed with tests results.
- `Expect` must be a valid CSV data set, with column names in first line. You can expect data set response as well as SQL error. To test error you need to 
- specify 2x2 csv table as follow:
- 
-| name    | code           |
-|---------|----------------|
-| error   | SQL-errorCode  |
-
-Code value must be [valid PostgreSQL error code](http://www.postgresql.org/docs/9.4/static/errcodes-appendix.html#ERRCODES-TABLE) prepended with string `SQL-`.
-Please place your test scenario in `test/scenario.sql` (you can find example scenario file there).
  
 ### Database connection
 
 You are required to provide valid connection to working PostgreSQL instance. This scaffolding is tested on PostgreSQL 9.4, however it should work on other 
-database versions. 
+database server version. 
 If you just installed fresh version of PostgreSQL server don't forget to enable listening, setting `listen_address = 'localhost'` in PostgreSQL configuration
  file (on most *nix system it's located at `/etc/postgresql/9.4/main/postgresql.conf`). You may also have to adjust Host Based Authentication Policy that is 
  described in `pg_hba.conf` file (recommended authentication method is MD5).
@@ -59,7 +64,7 @@ If you just installed fresh version of PostgreSQL server don't forget to enable 
 ### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
-*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompted for password, enter
+*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompt for password, enter
  password `realskill`.
 ```  
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
@@ -87,15 +92,15 @@ Create user `realskill` with `realskill` password.
 createuser -P -U postgres -W realskill
 ```
 
-You will be prompted for new user password twice, then postgres superuser password (default is **postgres**).
+You will be prompt for new user password twice, then postgres superuser password (default is **postgres**).
 
-Create database `realskill` and set ownership to user `realskill` (you will be prompted for **postgres** password).
+Create database `realskill` and set ownership to user `realskill` (you will be prompt for **postgres** password).
 
 ```
 createdb -O realskill -U postgres -W realskill
 ```
 
-Change schema public (of realskill database) ownership to user `realskill` (you will be prompted for **postgres** password).
+Change schema public (of realskill database) ownership to user `realskill` (you will be prompt for **postgres** password).
 
 ```
 psql -d realskill -U postgres -W -c "ALTER SCHEMA public OWNER TO realskill;"
@@ -105,4 +110,4 @@ psql -d realskill -U postgres -W -c "ALTER SCHEMA public OWNER TO realskill;"
 
     npm test
 
-
+Good luck!
