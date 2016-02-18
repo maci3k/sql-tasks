@@ -2,8 +2,9 @@
 
 ## Summary
 Materialized view is a database object that contains the results of a query and represents itself as a regular table. 
-It is used to increase the performance on complex schemas with large records sets and simplify queries. 
-In this task simple schema is provided. Two materialized views are already created, but don't works as it is desired. Any change in physical tables data are not reflected in materialized views based on that tables.
+It is used to increase the performance on complex schemas with large records sets and to simplify queries. 
+In this task simple schema is provided. Two materialized views are already created, but don't work as desired. 
+Any change in physical tables data is not reflected in materialized views.
 
 ## Goals
 
@@ -37,7 +38,8 @@ The database consists of three tables:
 | ...          | ...        | ...               |
 
 
-Modify **daily_sum_of_orders.sql** and **top_100_buyers.sql** files so that the views refresh every time the data change in the depended physical tables. In other words, provide solution that will keep materialized views in sync with actual data.
+Modify **daily_sum_of_orders.sql** and **top_100_buyers.sql** files so that the views refresh every time the data change in the depended physical tables. 
+In other words, provide solution that will keep materialized views in sync with actual data.
 
 
 ## Setup
@@ -61,7 +63,7 @@ If you have just installed fresh version of PostgreSQL server don't forget to en
 ### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
-*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompted for password, enter
+*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When prompted for password, enter
  password `realskill`.
 ```  
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
