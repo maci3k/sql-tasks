@@ -18,21 +18,43 @@ npm install
 Provided runner parses plain text file as below. For syntax highlighting sql format is recommended.
  
 ```
---statement="../solution/schema.sql"
---expect="result/top_100_buyers_1.csv"
+--statement="../solution/schema.sql" Seed schema
 --statement insert valid row
 INSERT INTO users(email) VALUES ('example@email.com'),('another@email.com');
+--statement
 SELECT * FROM users;
---expect users list
+--expect 2 users
 id,email
 1,example@email.com
 2,another@email.com
+--statement="select_all_users.sql" Select all users
+--expect="expected_users.csv" 2 users
 --statement insert incorrect row
 INSERT INTO users(email) VALUES (1,2,3,4)
 --expect syntax error
 name,code
 error,SQL-42601
 ```
+
+That would be translated into following scenarios:
+
+```
+Evaluate scenario
+    Statement Seed schema
+      ✓ should be successfull
+    Statement insert valid row
+      ✓ should be successfull
+    Statement SELECT * FROM users;
+      ✓ should return 2 users
+    Statement Select all users
+      ✓ should return 2 users
+    Statement insert incorrect row
+      ! error: INSERT has more expressions than target columns
+        code: 42601
+        routine: transformInsertRow 
+      ✓ should return syntax error
+```
+
 Scenarios are composed of 2 types of instructions: `statement` and `expect`. Each instruction symbol must be prepended with `--`. Last executed `statement` 
 result is stored and compared with subsequent `expect`. `Statement` and `expected` content can be provided inline (in subsequent lines, before next instruction
  symbol) as well as extracted into separate file (see example above). You can put some inline comment after `--statement` or `--expect` statement if 
