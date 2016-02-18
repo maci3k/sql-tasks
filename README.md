@@ -2,7 +2,7 @@
 
 ## Summary
 
-Provide SQL schema and perform basic CRUD operations on it.
+Provide SQL schema and perform basic CRUD operations.
 
 ## Goals
 
@@ -64,8 +64,8 @@ If you just installed fresh version of PostgreSQL server don't forget to enable 
 ### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
-*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompt for password, enter
- password `realskill`.
+*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When prompted for password, enter
+ `realskill`.
 ```  
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
 ```
@@ -92,15 +92,15 @@ Create user `realskill` with `realskill` password.
 createuser -P -U postgres -W realskill
 ```
 
-You will be prompt for new user password twice, then postgres superuser password (default is **postgres**).
+You will be prompted for new user password twice, then postgres superuser password (default is **postgres**).
 
-Create database `realskill` and set ownership to user `realskill` (you will be prompt for **postgres** password).
+Create database `realskill` and set ownership to user `realskill` (you will be prompted for **postgres** password).
 
 ```
 createdb -O realskill -U postgres -W realskill
 ```
 
-Change schema public (of realskill database) ownership to user `realskill` (you will be prompt for **postgres** password).
+Change schema public (of realskill database) ownership to user `realskill` (you will be prompted for **postgres** password).
 
 ```
 psql -d realskill -U postgres -W -c "ALTER SCHEMA public OWNER TO realskill;"
