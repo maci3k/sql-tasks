@@ -6,13 +6,13 @@ Provide SQL query that will efficiently search textual data for words occurrence
 
 ## Goal
 
-There is a table that contains 20 example dog breeds. We would like to filter out that data searching for records that contain:
+There is a table that contains 20 sample dog breeds. We would like to filter out that data searching for records that contain:
 
 * 'friendly' and 'family' in `temperament` column
 * 'hunting' or 'gundog' or 'retrieve' in `family`, `original_function` or `temperament`
 * 'herding' or 'sheepdog' or 'livestock' but not contain 'mastiff'; in `family` or `original_function`
 
-Save your queries in files: `solution/search1.sql`, `solution/search2.sql` and `solution/search3.sql`
+Save your queries in following files: `solution/search1.sql`, `solution/search2.sql` and `solution/search3.sql`
 
 ## Setup
 
@@ -35,7 +35,7 @@ If you just have installed fresh version of PostgreSQL server don't forget to en
 ### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
-*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompted for password, enter
+*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When prompted for password, enter
  password `realskill`.
 ```  
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
