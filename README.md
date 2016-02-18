@@ -1,11 +1,11 @@
 # PostgreSQL - NOT NULL column on the existing database 
 
 ## Summary
-Sometimes it happens that you need to change the schema of the table. In this tasks, `users` table (already containing some data), needs an additional column.
+Sometimes it happens that you need to change the schema of the table. In this task, `users` table (already containing some data), needs an additional column.
 
 ## Goals
 
-Add to the `users` table ***NOT NULL*** and at the same time ***UNIQUE*** **email** column. 
+Add **email** column to `users` table. It must be ***NOT NULL*** and at the same time ***UNIQUE***. 
 
 The initial `users` table structure:
 
@@ -19,7 +19,7 @@ The initial `users` table structure:
 
 
 Complete missing emails field according to the pattern:
-**testID`@`test.com** for example: **test1`@`test.com**
+**test${rowID}`@`test.com** for example: **test1`@`test.com**
 
 Table below shows results of valid solution.
 
@@ -59,8 +59,8 @@ If you just installed fresh version of PostgreSQL server don't forget to enable 
 ### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
-*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompt for password, enter
- password `realskill`.
+*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When prompted for password, enter
+ `realskill`.
 ```  
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
 ```
@@ -87,15 +87,15 @@ Create user `realskill` with `realskill` password.
 createuser -P -U postgres -W realskill
 ```
 
-You will be prompt for new user password twice, then postgres superuser password (default is **postgres**).
+You will be prompted for new user password twice, then postgres superuser password (default is **postgres**).
 
-Create database `realskill` and set ownership to user `realskill` (you will be prompt for **postgres** password).
+Create database `realskill` and set ownership to user `realskill` (you will be prompted for **postgres** password).
 
 ```
 createdb -O realskill -U postgres -W realskill
 ```
 
-Change schema public (of realskill database) ownership to user `realskill` (you will be prompt for **postgres** password).
+Change schema public (of realskill database) ownership to user `realskill` (you will be prompted for **postgres** password).
 
 ```
 psql -d realskill -U postgres -W -c "ALTER SCHEMA public OWNER TO realskill;"
