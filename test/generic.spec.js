@@ -56,55 +56,81 @@ function getFileContents(path)
 
 function parse(spec)
 {
-    var parsePromises = [], lines = spec.split(SYMBOLS.DELIMITER);
-    lines.forEach(function (str)
+    var lines = spec.split(SYMBOLS.DELIMITER);
+
+    function cleanupBody(body)
     {
-        parsePromises.push(new Promise(function (resolve)
+        return body.replace(/^\s+|\s+$/g, '');
+    }
+
+    function parseStatementOrExpect(str, match, type)
+    {
+        return new Promise(function (resolve)
         {
             var obj = {};
-            if ('statement' === str.substr(0, 9)) {
-                obj.type = SYMBOLS.STATEMENT;
-                if (SYMBOLS.FILENAME_START === str[9]) {
-                    obj.body = getFileContents(str.substr(10, str.indexOf('\n')));
-                } else {
-                    obj.body = str.substr(str.indexOf('\n'), str.length);
-                    if (str.indexOf('\n') > 9) {
-                        obj.comment = str.substr(10, str.indexOf('\n') - 10);
-                    }
-                }
-                obj.expects = [];
-            } else if ('expect' === str.substr(0, 6)) {
-                obj.type = SYMBOLS.EXPECT;
-                if (SYMBOLS.FILENAME_START === str[6]) {
-                    obj.body = getFileContents(str.substr(7, str.indexOf('\n')));
-                } else {
-                    obj.body = str.substr(str.indexOf('\n'), str.length);
-                    if (str.indexOf('\n') > 6) {
-                        obj.comment = str.substr(7, str.indexOf('\n') - 7);
-                    }
-                }
-            } else if (0 === str.length) {
-                resolve(false);
+            obj.type = type;
+            var filename = match[2];
+            var comment = match[3];
+            if (filename) {
+                obj.body = cleanupBody(getFileContents(filename));
             } else {
-                throw new Error('Unknown operation type ' + str.substr(0, str.indexOf('\n')));
+                obj.body = cleanupBody(str.substr(str.indexOf('\n'), str.length));
             }
-            obj.body = obj.body.replace(/^\s+|\s+$/g, '');
-            if (SYMBOLS.EXPECT === obj.type) {
-                var converter = new Converter({
-                    noheader: false,
-                    quote: '!'
-                });
+            if (comment) {
+                obj.comment = comment;
+            }
+            resolve(obj);
+        });
+    }
+
+    function parseExpect(str, match)
+    {
+        return parseStatementOrExpect(str, match, SYMBOLS.EXPECT).then(function (obj)
+        {
+            var converter = new Converter({
+                noheader: false,
+                quote: '!'
+            });
+            return new Promise(function (resolve, reject)
+            {
                 converter.fromString(obj.body, function (err, json)
                 {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
                     obj.body = json;
                     resolve(obj);
                 });
-            } else {
-                resolve(obj);
-            }
-        }));
-    });
-    return Promise.all(parsePromises).then(function (data)
+            });
+        });
+    }
+
+    function parseStatement(str, match)
+    {
+        return parseStatementOrExpect(str, match, SYMBOLS.STATEMENT).then(function (obj)
+        {
+            obj.expects = [];
+            return obj;
+        });
+    }
+
+    return Promise.map(lines, function (str)
+    {
+        var matchStatement = str.match(/statement(="([^"]*)")?\s*(.*)?/);
+        if (matchStatement) {
+            return parseStatement(str, matchStatement);
+        }
+        var matchExpect = str.match(/expect(="([^"]*)")?\s*(.*)?/);
+        if (matchExpect) {
+            return parseExpect(str, matchExpect);
+        }
+        if (0 === str.length) {
+            return false;
+        } else {
+            throw new Error('Unknown operation type ' + str.substr(0, str.indexOf('\n')));
+        }
+    }).then(function (data)
     {
         for (var i = 0, k = 0; i < data.length; i++) {
             if (!data[i]) {
