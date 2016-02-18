@@ -2,7 +2,9 @@
 
 ## Summary
 
-Primitive one-table schema with example 20 records is provided. The table contains even too specific information about dog breeds size. The task is to provide SQL view that will horizontally aggregate sizes and also convert measures units.
+Primitive one-table schema with 20 sample records is provided. 
+The table contains too specific information about dog breeds size. 
+The task is to provide SQL view that will horizontally aggregate sizes and also convert measure units.
 
 ## Goal
 
@@ -18,14 +20,17 @@ female_height_max
 female_weight_min
 female_weight_max
 ```
-We want to be able to roughly order breeds by height and weight. With structure above it's a bit difficult and may cause unnecessary query complexity. The way it has to be solved is horizontally aggregate individually height and weight; regardless of minimum, 
-maximum and whether is male or female. Other words we want to calculate average value of height and average value of weight for each breed regardlessly. Finally height and weight should be cast to an integer.
+We want to be able to roughly order breeds by height and weight. With structure above it's a bit difficult and may cause unnecessary query complexity. 
+The way it has to be solved is to horizontally aggregate height and weight; regardless of minimum, maximum and whether it is male or female. 
+In other words we want to calculate average value of height and average value of weight for each breed. Finally height and weight should be casted to an integer.
 
-Second part of this task is to convert US measures units to metric SI standard. Table `breed` describes all height values in inches and weight in pounds, but desired units are centimeters and kilograms. For dimension use 2.54 multiplier to get 
-centimeters and for weight 0.4536 multiplier to get kilograms.
-Result data set should be order by weight and height, both descending.
+Second part of this task is to convert US measure units to metric SI standard. 
+Table `breed` describes all height values in inches and weight in pounds, but desired units are centimeters and kilograms. 
+For dimension use 2.54 multiplier to get centimeters and for weight 0.4536 multiplier to get kilograms.
+Result data set should be ordered by weight and height, both descending.
 
-Your aim is to combine all requirements above and provide SQL view named `view_breed`. The view should contain following columns: `id`, `name`, `origin`, `height`, `weight`.
+Your aim is to combine all requirements above and provide SQL view named `view_breed`. 
+The view should contain following columns: `id`, `name`, `origin`, `height`, `weight`.
 Please save view creation script in file `solution/view_breed.sql`. 
 
 Table below shows results set of `SELECT * FROM view_breed` of valid solution. 
@@ -74,7 +79,7 @@ If you just have installed fresh version of PostgreSQL server don't forget to en
 ### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
-*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompted for password, enter
+*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When prompted for password, enter
  password `realskill`.
 ```  
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
