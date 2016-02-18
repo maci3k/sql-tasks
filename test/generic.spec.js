@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var Promise = require('bluebird');
-var readFile = Promise.promisify(require('fs').readFile);
+var readFile = Promise.promisify(fs.readFile);
 var expect = require('chai').expect;
 var async = require('async');
 var Converter = require('csvtojson').Converter;
@@ -132,6 +132,10 @@ function parse(spec)
         }
     }).then(function (data)
     {
+        data = data.filter(function (item)
+        {
+            return null != item && false !== item;
+        });
         for (var i = 0, k = 0; i < data.length; i++) {
             if (!data[i]) {
                 data.splice(i, 1);
@@ -221,6 +225,12 @@ describe('RealSkill SQL runner', function ()
                             return callback();
                         });
                     });
+                    if (!stmt.expects.length) {
+                        it('should be successfull', function ()
+                        {
+
+                        });
+                    }
                 });
             });
         });
