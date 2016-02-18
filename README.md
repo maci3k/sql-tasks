@@ -2,12 +2,14 @@
 
 ## Summary
 
-PostgreSQL 9.3 introduced JSON support to the database. One of many improvements was ability to aggregate row set into JSON array. Next version - 9.4 introduced building JSON in convenient way on the data query language level. This task examines knowledge 
-of both those capabilities.
+PostgreSQL 9.3 introduced JSON support. One of many improvements was ability to aggregate row set into JSON array. 
+Next version - 9.4 introduced building JSON in convenient way on the data query language level. 
+This task examines knowledge of both those capabilities.
 
 ## Goal
 
-Table `breed` describes dog breeds with few basic characteristics like origin, original function or sizes. The goal of this task is to aggregate breeds by their origin so that gives a 3-column result set as shown in table below.
+Table `breed` describes dog breeds with few basic characteristics like origin, original function or sizes. 
+The goal of this task is to aggregate breeds by their origin so that it gives a 3-column result set as shown in table below.
 
 | origin | count | breeds |
 |--------|-------|--------|
@@ -25,7 +27,9 @@ Table `breed` describes dog breeds with few basic characteristics like origin, o
 | Yugoslavia | 1 | JSON |
 
 Column `count` should be a total number of breeds from each origin. 
-Field `breeds` should contain json array of objects with breeds originated each country. Each object of that array should have two properties: `name` and `family` which are values of corresponding `breed` table columns. Listing below represents `breeds` column value for first group - Canada.
+Field `breeds` should contain json array of objects with breeds originated from given country. 
+Each object of that array should have two properties: `name` and `family` which are values of corresponding `breed` table columns. 
+Listing below represents `breeds` column value for first group - Canada.
 
 ```
 [
@@ -64,7 +68,7 @@ If you have just installed fresh version of PostgreSQL server don't forget to en
 ### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
-*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompted for password, enter
+*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When prompted for password, enter
  password `realskill`.
 ```  
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
