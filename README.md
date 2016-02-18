@@ -1,12 +1,12 @@
 # PostgreSQL - Foreign Keys and Unique Index
 
 ## Summary
-You are provided with a simplified "online shop" schema that has `address`, `users`, `product`, `order` and `assessment` tables. Unfortunately, it 
-turned out that some reflations are missing. Add necessary columns and constraints according to the requirements.
+You are provided with a simplified "online shop" schema that consists of `address`, `users`, `product`, `order` and `assessment` tables. Unfortunately, it 
+turned out that some relations are missing. Add necessary columns and constraints according to the requirements.
 
 ## Goals
 
-First part of this task is ensure schema consistency by modifications that will add following relations:
+First part of this task is ensurin schema consistency by adding following relations:
 
 * from `users` to `address` and name the column `address_id`
 * from `product` to `users` and name the column `user_id`
@@ -15,7 +15,8 @@ First part of this task is ensure schema consistency by modifications that will 
 * from `assessment` to `product` and name the column `product_id`
 * from `assessment` to `users` and name the column `users_id`
 
-Your modifications should also guarantee data consistency after `DELETE` and `UPDATE` operations. In other words, if a product gets deleted, all dependent rows of orders and assessment should also be deleted. 
+Your modifications should also guarantee data consistency after `DELETE` and `UPDATE` operations. 
+In other words, if a product gets deleted, all dependent rows of orders and assessment should also be deleted. 
 
 ### Schema structure without consistency constraints:
 
@@ -28,7 +29,7 @@ Your modifications should also guarantee data consistency after `DELETE` and `UP
 | zip_code  |          |             |             |             |
 | country   |          |             |             |             |
 
-Second part of task is to provide appropriate constraints that will ensure uniqueness of following fields:
+Second part of this task is to provide appropriate constraints that will ensure uniqueness of following fields:
 
 * `users`.`nickname`
 * `users`.`email`
