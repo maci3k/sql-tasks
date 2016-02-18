@@ -1,7 +1,7 @@
 # PostgreSQL scaffolding for RealSkill
 
 You can quickly create PostgreSQL tasks by cloning this repository. 
-The scaffolding provide PostgreSQL driver configuration, mocha tests setup and simple SQL test scenarios runner.
+The scaffolding provides PostgreSQL driver configuration, mocha tests setup and simple SQL test scenarios runner.
 
 ## Setup
 
@@ -15,10 +15,11 @@ npm install
 
 ### Scenarios format
 
-Provided runner parse plain text file as below. For syntax highlighting sql format is recommended.
+Provided runner parses plain text file as below. For syntax highlighting sql format is recommended.
  
 ```
 --statement="../solution/schema.sql"
+--expect="result/top_100_buyers_1.csv"
 --statement insert valid row
 INSERT INTO users(email) VALUES ('example@email.com'),('another@email.com');
 SELECT * FROM users;
@@ -33,17 +34,17 @@ name,code
 error,SQL-42601
 ```
 Scenarios are composed of 2 types of instructions: `statement` and `expect`. Each instruction symbol must be prepended with `--`. Last executed `statement` 
-result is stored and compared with following `expect`. `Statement` and `expected` content can be provided inline (in following lines, before next instruction
- symbol) as well as excluded into separate file (see example above). You can put some inline comment after `--statement` or `--expect` statement if 
+result is stored and compared with subsequent `expect`. `Statement` and `expected` content can be provided inline (in subsequent lines, before next instruction
+ symbol) as well as extracted into separate file (see example above). You can put some inline comment after `--statement` or `--expect` statement if 
  instruction doesn't point to external file. Those comments will be displayed with tests results.
- `Expect` must be a valid CSV data set, with column names in first line. You can expect data set response as well as SQL error. To test error you need to 
- specify 2x2 csv table as follow:
+ `Expect` must be a valid CSV data set, with column names in first row. You can expect data set response as well as SQL error. To test error you need to 
+ specify 2x2 csv table as follows:
  
 | name    | code           |
 |---------|----------------|
 | error   | SQL-errorCode  |
 
-Code value must be [valid PostgreSQL error code](http://www.postgresql.org/docs/9.4/static/errcodes-appendix.html#ERRCODES-TABLE) prepended with string `SQL-`.
+Code value must be [valid PostgreSQL error code](http://www.postgresql.org/docs/9.4/static/errcodes-appendix.html#ERRCODES-TABLE) prefixed with `SQL-` string.
 Please place your test scenario in `test/scenario.sql` (you can find example scenario file there).
  
 ### Database connection
@@ -59,7 +60,7 @@ If you just installed fresh version of PostgreSQL server don't forget to enable 
 ### Configuration on *nix systems
 
 You can manually prepare database connection or use command below that will create user, database, and set appropriate ownerships.
-*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When will be prompted for password, enter
+*Command below must be run from postgres system user* (switch to root user then switch to postgres by `su postgres`). When prompted for password, enter
  password `realskill`.
 ```  
 createuser realskill -P && createdb realskill -O realskill && psql -d realskill -c 'ALTER SCHEMA public OWNER TO realskill;'
