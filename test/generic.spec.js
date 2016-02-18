@@ -174,12 +174,12 @@ function executeSql(specObj)
 
 function printSqlError(stmt)
 {
-    console.log('   ', highlighStart, ' ! ' + stmt.error.toString());
+    console.error('   ', highlighStart, ' ! ' + stmt.error.toString());
     if (stmt.error.detail) {
-        console.log('        detail: ' + stmt.error.detail);
+        console.error('        detail: ' + stmt.error.detail);
     }
-    console.log('        code: ' + stmt.error.code);
-    console.log('        routine: ' + stmt.error.routine, highlightEnd);
+    console.error('        code: ' + stmt.error.code);
+    console.error('        routine: ' + stmt.error.routine, highlightEnd);
 }
 
 describe('RealSkill SQL runner', function ()
