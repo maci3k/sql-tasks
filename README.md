@@ -2,13 +2,15 @@
 
 ## Summary
 
-A sequence in PostgreSQL is a database object that automatically incrementing numeric value. Using sequences allows you to avoid the problems with inserts 
-conflicts. Your task is to provide sequence to the existing `student` schema.
+A sequence in PostgreSQL is a database object that automatically increments numeric value. 
+Using sequences allows you to avoid problems with inserts and PK uniqueness. 
+Your task is to provide sequence for existing `student` schema.
 
 ## Goals 
 
-Create `student_id_seq` and use it to regenerate student **id**. It should start with **110** value and increased by **5**. Pay 
-attention to student **id** type, that already provide a sequence. In other words - you need to clean up before adding `student_id_seq` sequence.
+Create `student_id_seq` and use it to regenerate student **id**. It should start with **110** value and increase by **5**. 
+Keep in mind that there is already some data in `student` table and we want you to reset their ids so that when next student is added they get proper 
+id from the sequence. In other words - you need to clean up before adding `student_id_seq` sequence.
 
 | student           |  
 |-------------------|
