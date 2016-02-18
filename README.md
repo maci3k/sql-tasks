@@ -15,7 +15,7 @@ npm install
 
 ### Scenarios format
 
-Provided runner parses plain text file as below. For syntax highlighting sql format is recommended.
+Provided runner parses plain text file as below (for syntax highlighting the sql format is recommended).
  
 ```
 --statement="../solution/schema.sql" Seed schema
