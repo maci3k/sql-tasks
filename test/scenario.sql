@@ -17,7 +17,7 @@ SELECT * FROM car;
  brand,weight
  Suzuki,1787.25
 
- --statement="insert.sql"
+--statement="insert.sql"
 --statement="../solution/select_the_heaviest_car.sql"
 --expect the heaviest car
  brand,weight
@@ -61,3 +61,12 @@ SELECT * FROM car;
  9,BMW,1986,black metallic,1433.13,false
  10,Toyota,2002,blue,1477.07,true
  11,Bentley,2003,blue metallic,1800.97,false
+
+
+ --statement="insert2.sql"
+ --statement="../solution/select_unused_cars.sql"
+--expect the list of cars
+ brand,year_of_manufacture,color
+ Bentley,1988,red metallic
+ Bentley,1999,red matte metallic
+ Toyota,2000,red
