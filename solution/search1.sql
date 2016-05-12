@@ -1,1 +1,1 @@
--- Filter out that data searching for records that contain 'friendly' and 'family' in `temperament` column
+-- Filter out that data searching for records that contain 'friend' and 'family' in `temperament` column
