@@ -1,1 +1,9 @@
--- Write your schema here
+-- Write your schema below
+--| car                        |
+--|----------------------------|
+--| id (PK)                    |
+--| brand **STR**              |
+--| year_of_manufacture **INT**|
+--| color **STR**              |
+--| weight **FLOAT**           |
+--| secondhand **BOOL**        |

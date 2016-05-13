@@ -1,1 +1,2 @@
---Write your select query here
+--Write your select query below
+--Choose the brand, year of production and color of all unused cars, produced in 2000 (or below), which color is a variation of the red, sorted by the earliest year of production
