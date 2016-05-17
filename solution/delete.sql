@@ -1,1 +1,2 @@
---Write your delete query here
+--Write your delete query below
+--Remove all used cars, which in 2000 had more than 10 years
