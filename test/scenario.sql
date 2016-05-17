@@ -25,3 +25,16 @@ id,name,origin,height,weight
 15,Papillon,France,23,4
 17,Yorkshire Terrier,England,20,3
 6,Chihuahua,Mexico,18,3
+
+
+--statement="./data2.sql"
+--statement="../solution/view_breed.sql"
+--statement select basic breed information
+SELECT * FROM view_breed;
+--expect breed listing with SI metrics
+id,name,origin,height,weight
+21,Akita,Japan,64,44
+25,German Shepherd Dog,Germany,61,39
+22,American Cocker Spaniel,United States,38,12
+23,Shetland Sheepdog,Scotland,36,9
+24,Poodle (Miniature),Germany,30,7
