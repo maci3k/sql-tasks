@@ -1,22 +1,22 @@
 {
-  "name": "sql-create-schema",
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {
-    "bluebird": "2.9.34",
-    "pg": "4.4.3"
-  },
-  "devDependencies": {
-    "async": "1.5.2",
-    "chai": "3.4.1",
-    "grunt": "0.4.5",
-    "grunt-cli": "0.1.13",
-    "grunt-contrib-jshint": "0.11.2",
-    "grunt-mocha-test": "0.12.7",
-    "mocha-junit-reporter": "1.6.1",
-    "csvtojson": "0.5.1"
-  },
-  "scripts": {
-    "test": "grunt test"
-  }
+    "name": "sql-create-schema",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "bluebird": "2.9.34",
+        "pg": "4.4.3"
+    },
+    "devDependencies": {
+        "async": "1.5.2",
+        "chai": "3.4.1",
+        "grunt": "0.4.5",
+        "grunt-cli": "0.1.13",
+        "grunt-contrib-jshint": "0.11.2",
+        "grunt-mocha-test": "0.12.7",
+        "mocha-junit-reporter": "1.6.1",
+        "csvtojson": "0.5.1"
+    },
+    "scripts": {
+        "test": "grunt verify --force"
+    }
 }

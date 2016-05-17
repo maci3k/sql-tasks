@@ -62,7 +62,20 @@ function parse(spec)
         parsePromises.push(new Promise(function (resolve)
         {
             var obj = {};
-            if ('statement' === str.substr(0, 9)) {
+            var parts = '';
+            var statement;
+            var commentFound;
+
+            if ('required expression' === str.substr(0, 19)) {
+                parts = str.split('"');
+                statement = getFileContents(parts[3]);
+                obj.type = SYMBOLS.STATEMENT;
+                obj.required = parts[1];
+
+                commentFound = statement.indexOf(SYMBOLS.DELIMITER);
+                obj.body = commentFound !== -1 ? statement.substr(statement.indexOf('\n'), statement.length) : statement;
+            }
+            else if ('statement' === str.substr(0, 9)) {
                 obj.type = SYMBOLS.STATEMENT;
                 if (SYMBOLS.FILENAME_START === str[9]) {
                     obj.body = getFileContents(str.substr(10, str.indexOf('\n')));
@@ -177,17 +190,14 @@ describe('RealSkill SQL runner', function ()
             async.each(specObject, function (stmt, callback)
             {
                 var label = 'Statement ' + (stmt.comment || stmt.body);
-                if (stmt.error && !stmt.expects.length) {
-                    printSqlError(stmt);
-                }
-                describe(label, function ()
-                {
-                    stmt.expects.forEach(function (expectValue)
+
+                if (stmt.required) {
+                    describe(label, function ()
                     {
-                        var expectLabel = 'should return ' + (expectValue.comment || 'should return valid data set');
+                        var expectLabel = 'should find ' + (stmt.required) + ' in ' + stmt.body;
                         it(expectLabel, function (done)
                         {
-                            expect(stmt.result).to.eql(expectValue.body);
+                            expect(stmt.body.indexOf(stmt.required)).to.not.equal(-1);
                             if (stmt.error) {
                                 printSqlError(stmt);
                             }
@@ -195,7 +205,27 @@ describe('RealSkill SQL runner', function ()
                             return callback();
                         });
                     });
-                });
+                } else {
+                    if (stmt.error && !stmt.expects.length) {
+                        printSqlError(stmt);
+                    }
+                    describe(label, function ()
+                    {
+                        stmt.expects.forEach(function (expectValue)
+                        {
+                            var expectLabel = 'should return ' + (expectValue.comment || 'should return valid data set');
+                            it(expectLabel, function (done)
+                            {
+                                expect(stmt.result).to.eql(expectValue.body);
+                                if (stmt.error) {
+                                    printSqlError(stmt);
+                                }
+                                done();
+                                return callback();
+                            });
+                        });
+                    });
+                }
             });
         });
     });

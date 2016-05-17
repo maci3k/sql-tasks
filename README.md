@@ -8,7 +8,7 @@ Provide SQL query that will efficiently search textual data for words occurrence
 
 There is a table that contains 20 sample dog breeds. We would like to filter out that data searching for records that contain:
 
-* 'friendly' and 'family' in `temperament` column
+* 'friend' and 'family' in `temperament` column
 * 'hunting' or 'gundog' or 'retrieve' in `family`, `original_function` or `temperament`
 * 'herding' or 'sheepdog' or 'livestock' but not contain 'mastiff'; in `family` or `original_function`
 

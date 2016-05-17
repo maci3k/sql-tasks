@@ -1,5 +1,5 @@
 {
   "protect": [
-    "test/", "README.md", ".gitignore", ".jshintrc", "Gruntfile.js", "package.json"
+    "test/", "README.md", ".gitignore", ".jshintrc", "Gruntfile.js", "package.json", "solution/schema.sql"
   ]
 }
