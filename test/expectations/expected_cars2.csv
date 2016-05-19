@@ -1,0 +1,10 @@
+id,brand,year_of_manufacture,color,weight,secondhand
+1,Bentley,1988,red metallic,1002.72,false
+2,Suzuki,2002,silver,1787.25,true
+4,Toyota,2000,red,1407.99,false
+5,Mercedes,1991,silver,1113.59,true
+6,Bentley,1984,black,1632.97,false
+8,Renault,2009,yellow,1331.13,false
+9,BMW,1986,black metallic,1433.13,false
+10,Toyota,2002,blue,1477.07,true
+11,Bentley,2003,blue metallic,1800.97,false
