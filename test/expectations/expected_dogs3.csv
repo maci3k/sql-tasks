@@ -1,0 +1,4 @@
+origin,count,breeds
+England,3,![{"name" : "Bull Terrier", "family" : "terrier, mastiff (bull)"}, {"name" : "Golden Retriever", "family" : "gundog, retriever"}, {"name" : "Yorkshire Terrier", "family" : "terrier"}]!
+Germany,2,![{"name" : "Boxer", "family" : "livestock dog, mastiff (bulldog)"}, {"name" : "Poodle (Miniature)", "family" : "gun dog, companion, water dog"}]!
+Mexico,1,![{"name" : "Chihuahua", "family" : "companion, southern (pariah)"}]!

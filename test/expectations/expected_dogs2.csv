@@ -1,0 +1,4 @@
+origin,count,breeds
+England,1,![{"name" : "Yorkshire Terrier", "family" : "terrier"}]!
+Germany,3,![{"name" : "Rottweiler", "family" : "livestock dog, sheepdog, mastiff (draft/cattle)"}, {"name" : "Poodle (Miniature)", "family" : "gun dog, companion, water dog"}, {"name" : "German Shepherd Dog", "family" : "livestock, herding"}]!
+Scotland,1,![{"name" : "Shetland Sheepdog", "family" : "livestock, herding"}]!
