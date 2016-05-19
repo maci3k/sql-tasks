@@ -5,11 +5,11 @@ INSERT INTO users (nickname, email, gender, address_id) values ('Linda', 'lhicks
 INSERT INTO users (nickname, email, gender, address_id) values ('Gerald', 'gfreeman1@parallels.com', 'Male', 3);
 INSERT INTO users (nickname, email, gender, address_id) values ('Randy', 'rgeorge2@moonfruit.com', 'Male', 1);
 INSERT INTO users (nickname, email, gender, address_id) values ('Benjamin', 'bbailey9@blinklist.com', 'Male', 3);
-INSERT INTO product (name, description, price, user_id) values ('Lenovo ThinkCentre Chromebox Tiny Desktop', 'scelerisque sed', '$147.27', 2);
-INSERT INTO product (name, description, price, user_id) values ('Dell Precision Tower 5810', 'Lorem ipsum dolor sit amet', '$99.08', 2);
-INSERT INTO product (name, description, price, user_id) values ('Apple iMac 27-Inch With Retina 5K Display', 'in interdum massa nibh nec erat.', '$212.10', 1);
-INSERT INTO product (name, description, price, user_id) values ('Dell Optiplex 9020 Micro', 'sed posuere libero dui id orci. Nam congue', '$58.82', 2);
-INSERT INTO product (name, description, price, user_id) values ('HP Z840 Workstation', 'Etiam sit amet lectus quis est congue mollis', '$33.55', 3);
+INSERT INTO product (name, description, price, user_id) values ('Lenovo ThinkCentre Chromebox Tiny Desktop', 'scelerisque sed', 147.27, 2);
+INSERT INTO product (name, description, price, user_id) values ('Dell Precision Tower 5810', 'Lorem ipsum dolor sit amet', 99.08, 2);
+INSERT INTO product (name, description, price, user_id) values ('Apple iMac 27-Inch With Retina 5K Display', 'in interdum massa nibh nec erat.', 212.10, 1);
+INSERT INTO product (name, description, price, user_id) values ('Dell Optiplex 9020 Micro', 'sed posuere libero dui id orci. Nam congue', 58.82, 2);
+INSERT INTO product (name, description, price, user_id) values ('HP Z840 Workstation', 'Etiam sit amet lectus quis est congue mollis', 33.55, 3);
 INSERT INTO orders (order_date, user_id, product_id) values ('2016-05-01', 1, 5);
 INSERT INTO orders (order_date, user_id, product_id) values ('2016-07-13', 1, 2);
 INSERT INTO orders (order_date, user_id, product_id) values ('2016-02-11', 4, 4);
