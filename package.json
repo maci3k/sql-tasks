@@ -17,6 +17,6 @@
     "csvtojson": "0.5.1"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt verify --force"
   }
 }
