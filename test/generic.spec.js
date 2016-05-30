@@ -39,7 +39,6 @@
                     }
                     describe(label, function ()
                     {
-                        //TODO protect against adding words in comments
                         if (stmt.required) {
                             var expectLabel = 'should find ' + '"' + stmt.required + '"';
                             it(expectLabel, function (done)

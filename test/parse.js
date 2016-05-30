@@ -89,6 +89,7 @@
 
                 if (filename) {
                     obj.body = cleanupBody(testHelper.getFileContents(filename));
+                    obj.body = obj.body.replace(/^--.*/gm, '');
                 } else {
                     obj.body = cleanupBody(str.substr(str.indexOf('\n'), str.length));
                 }
