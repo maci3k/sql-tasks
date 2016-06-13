@@ -106,8 +106,21 @@ Change schema public (of realskill database) ownership to user `realskill` (you 
 psql -d realskill -U postgres -W -c "ALTER SCHEMA public OWNER TO realskill;"
 ```
 
+### Alternative configuration
+
+All you need is to install `docker` and `docker-compose`
+
+* [docker](https://docs.docker.com/engine/installation/)
+* [docker-compose](https://docs.docker.com/compose/install/)
+
+Then you can prepare environment for task on each system and not worry about configuration thanks to command:
+    
+    docker-compose up
+
+Don't forget to turn off PostgreSQL if you have it already installed. 
+
 ### Run tests
 
-    npm test
+    grunt test
 
 Good luck!
